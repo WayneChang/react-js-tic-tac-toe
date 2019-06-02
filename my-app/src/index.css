@@ -50,6 +50,10 @@ ol, ul {
   border: 0px;
 }
 
+.selected-move {
+  font-weight: bold;
+}
+
 .kbd-navigation .square:focus {
   background: #ddd;
 }
