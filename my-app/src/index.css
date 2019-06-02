@@ -17,7 +17,7 @@ ol, ul {
   margin-bottom: 10px;
 }
 
-.square {
+.square, .col-title, .row-title, .col-row-category {
   background: #fff;
   border: 1px solid #999;
   float: left;
@@ -25,8 +25,7 @@ ol, ul {
   font-weight: bold;
   line-height: 34px;
   height: 34px;
-  margin-right: -1px;
-  margin-top: -1px;
+  margin: -1px;
   padding: 0;
   text-align: center;
   width: 34px;
@@ -34,6 +33,21 @@ ol, ul {
 
 .square:focus {
   outline: none;
+}
+
+.col-row-category {
+  font-size: 12px;
+  border: 0px;
+  width: 60px;
+}
+
+.col-title {
+  border: 0px;
+}
+
+.row-title {
+  margin-left: 26px;
+  border: 0px;
 }
 
 .kbd-navigation .square:focus {
