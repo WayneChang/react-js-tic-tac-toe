@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Board from './components/board';
+import MoveList from './components/move-list'
 import './index.css';
 
 class Game extends React.Component {
@@ -54,28 +55,9 @@ class Game extends React.Component {
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
 
-    let moves = history.map((step, move) => {
-      let desc =
-        move ? `Go to move # ${move},
-                ${step.squares[step.currMove]} at
-                (col, row) = (${(step.currMove % 3) + 1}, ${Math.floor(step.currMove / 3) + 1})`
-          : "Go to game start";
-      desc = move === this.state.stepNumber ? <b>{desc}</b> : desc;
-      return (
-        <li key={move}>
-          <button
-            onClick={() => this.jumpTo(move)}>
-            {desc}
-          </button>
-        </li>
-      );
-    });
-    if (this.state.isMoveSortDesc) {
-      moves = moves.reverse();
-    }
     let status;
     if (winner) {
-      status = `Winner: ${winner}`;
+      status = `Winner: ${winner[0]}`;
     } else {
       status = `Next player: ${this.nextMark()}`
     }
@@ -94,7 +76,11 @@ class Game extends React.Component {
             <input className="tgl tgl-skewed" id="tgBtn" type="checkbox" onClick={() => this.handleToggle()} />
             <label className="tgl-btn" data-tg-off="Ascending" data-tg-on="Descending" htmlFor="tgBtn"></label>
           </div>
-          <ol>{moves}</ol>
+          <MoveList
+            history={history}
+            stepNumber={this.state.stepNumber}
+            isMoveSortDesc={this.state.isMoveSortDesc}
+            onClick={(step) => this.jumpTo(step)} />
         </div>
       </div>
     );
@@ -122,7 +108,7 @@ function calculateWinner(squares) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      return [squares[a], lines[i]];
     }
   }
   return null;
