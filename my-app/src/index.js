@@ -62,6 +62,7 @@ class Game extends React.Component {
       }],
       stepNumber: 0,
       xIsNext: true,
+      isMoveSortDesc: false,
     }
   }
   nextMark() {
@@ -86,6 +87,10 @@ class Game extends React.Component {
     });
   }
 
+  handleToggle() {
+    this.setState({ isMoveSortDesc: !this.state.isMoveSortDesc });
+  }
+
   jumpTo(step) {
     this.setState({
       stepNumber: step,
@@ -98,10 +103,10 @@ class Game extends React.Component {
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
 
-    const moves = history.map((step, move) => {
+    let moves = history.map((step, move) => {
       let desc =
-        move ? `Go to move # ${move}, 
-                ${step.squares[step.currMove]} at 
+        move ? `Go to move # ${move},
+                ${step.squares[step.currMove]} at
                 (col, row) = (${(step.currMove % 3) + 1}, ${Math.floor(step.currMove / 3) + 1})`
           : "Go to game start";
       desc = move === this.state.stepNumber ? <b>{desc}</b> : desc;
@@ -114,6 +119,9 @@ class Game extends React.Component {
         </li>
       );
     });
+    if (this.state.isMoveSortDesc) {
+      moves = moves.reverse();
+    }
     let status;
     if (winner) {
       status = `Winner: ${winner}`;
@@ -131,6 +139,10 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div className="status">{status}</div>
+          <div>
+            <input className="tgl tgl-skewed" id="tgBtn" type="checkbox" onClick={() => this.handleToggle()} />
+            <label className="tgl-btn" data-tg-off="Ascending" data-tg-on="Descending" htmlFor="tgBtn"></label>
+          </div>
           <ol>{moves}</ol>
         </div>
       </div>
