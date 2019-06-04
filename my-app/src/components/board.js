@@ -5,6 +5,7 @@ class Board extends React.Component {
     renderSquare(i) {
         return (
             <Square
+                key={i}
                 value={this.props.squares[i]}
                 onClick={() => this.props.onClick(i)}
             />
@@ -12,33 +13,26 @@ class Board extends React.Component {
     }
 
     render() {
+        const cols = 3;
+        const rows = 3;
+        const board = [];
+        for (let row = 0; row <= rows; row++) {
+            let rowComps = [];
+            for (let col = 0; col <= cols; col++) {
+                if (row === 0 && col === 0) {
+                    rowComps.push(<label key={0} className="col-row-category">row\col</label>);
+                } else if (row === 0) {
+                    rowComps.push(<label key={col} className="col-title">{col}</label>);
+                } else if (col === 0) {
+                    rowComps.push(<label key={row} className="row-title">{row}</label>);
+                } else {
+                    rowComps.push(this.renderSquare(row * 3 + col));
+                }
+            }
+            board.push(<div key={row} className="board-row">{rowComps}</div>);
+        }
         return (
-            <div>
-                <div className="board-row">
-                    <label className="col-row-category">row\col</label>
-                    <label className="col-title">1</label>
-                    <label className="col-title">2</label>
-                    <label className="col-title">3</label>
-                </div>
-                <div className="board-row">
-                    <label className="row-title">1</label>
-                    {this.renderSquare(0)}
-                    {this.renderSquare(1)}
-                    {this.renderSquare(2)}
-                </div>
-                <div className="board-row">
-                    <label className="row-title">2</label>
-                    {this.renderSquare(3)}
-                    {this.renderSquare(4)}
-                    {this.renderSquare(5)}
-                </div>
-                <div className="board-row">
-                    <label className="row-title">3</label>
-                    {this.renderSquare(6)}
-                    {this.renderSquare(7)}
-                    {this.renderSquare(8)}
-                </div>
-            </div>
+            <div>{board}</div>
         );
     }
 }
