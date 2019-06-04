@@ -1,0 +1,33 @@
+.board-row:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+.col-title, .row-title, .col-row-category {
+    background: #fff;
+    border: 1px solid #999;
+    float: left;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 34px;
+    height: 34px;
+    padding: 0;
+    text-align: center;
+    width: 34px;
+}
+
+.col-row-category {
+    font-size: 12px;
+    border: 0px;
+    width: 60px;
+}
+
+.col-title {
+    border: 0px;
+}
+
+.row-title {
+    margin-left: 26px;
+    border: 0px;
+}
