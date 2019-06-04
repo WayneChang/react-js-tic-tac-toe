@@ -21,7 +21,7 @@ function MoveList(props) {
         moves = moves.reverse();
     }
     return (
-        <ol>{moves}</ol>
+        <div><ol>{moves}</ol></div>
     );
 }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Board from './components/board';
 import MoveList from './components/move-list'
+import ToggleSort from './components/toggle-sort'
 import './index.css';
 
 class Game extends React.Component {
@@ -15,6 +16,7 @@ class Game extends React.Component {
       stepNumber: 0,
       xIsNext: true,
       isMoveSortDesc: false,
+      winnerSquares: [],
     }
   }
   nextMark() {
@@ -25,7 +27,15 @@ class Game extends React.Component {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[this.state.stepNumber];
     const squares = current.squares.slice();
-    if (calculateWinner(squares) || squares[i]) {
+    const winner = calculateWinner(squares);
+    if (squares[i]) {
+      return;
+    }
+    if (winner) {
+      squares[i] = this.nextMark();
+      this.setState({
+        winnerSquares: winner[1]
+      });
       return;
     }
     squares[i] = this.nextMark();
@@ -67,15 +77,14 @@ class Game extends React.Component {
         <div className="game-board">
           <Board
             squares={current.squares}
+            winnerSquares={this.state.winnerSquares}
             onClick={(i) => this.handleClick(i)}
           />
         </div>
         <div className="game-info">
           <div className="status">{status}</div>
-          <div>
-            <input className="tgl tgl-skewed" id="tgBtn" type="checkbox" onClick={() => this.handleToggle()} />
-            <label className="tgl-btn" data-tg-off="Ascending" data-tg-on="Descending" htmlFor="tgBtn"></label>
-          </div>
+          <ToggleSort
+            onClick={() => this.handleToggle()} />
           <MoveList
             history={history}
             stepNumber={this.state.stepNumber}
