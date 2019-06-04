@@ -25,7 +25,6 @@ ol, ul {
   font-weight: bold;
   line-height: 34px;
   height: 34px;
-  margin: -1px;
   padding: 0;
   text-align: center;
   width: 34px;
@@ -33,6 +32,10 @@ ol, ul {
 
 .square:focus {
   outline: none;
+}
+
+.square-winner {
+  border: 1px solid black;
 }
 
 .col-row-category {

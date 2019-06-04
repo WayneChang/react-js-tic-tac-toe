@@ -16,6 +16,7 @@ class Game extends React.Component {
       stepNumber: 0,
       xIsNext: true,
       isMoveSortDesc: false,
+      winner: null,
       winnerSquares: [],
     }
   }
@@ -27,18 +28,11 @@ class Game extends React.Component {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[this.state.stepNumber];
     const squares = current.squares.slice();
-    const winner = calculateWinner(squares);
-    if (squares[i]) {
-      return;
-    }
-    if (winner) {
-      squares[i] = this.nextMark();
-      this.setState({
-        winnerSquares: winner[1]
-      });
+    if (this.state.winner || squares[i]) {
       return;
     }
     squares[i] = this.nextMark();
+    const winner = calculateWinner(squares);
     this.setState({
       history: history.concat([{
         squares: squares,
@@ -46,6 +40,8 @@ class Game extends React.Component {
       }]),
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
+      winner: winner ? winner[0] : null,
+      winnerSquares: winner ? winner[1] : [],
     });
   }
 
@@ -63,11 +59,11 @@ class Game extends React.Component {
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
+    const winner = this.state.winner;
 
     let status;
     if (winner) {
-      status = `Winner: ${winner[0]}`;
+      status = `Winner: ${winner}`;
     } else {
       status = `Next player: ${this.nextMark()}`
     }
