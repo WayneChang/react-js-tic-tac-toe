@@ -50,9 +50,12 @@ class Game extends React.Component {
   }
 
   jumpTo(step) {
+    const winner = calculateWinner(this.state.history[step].squares);
     this.setState({
       stepNumber: step,
       xIsNext: (step % 2) === 0,
+      winner: winner ? winner[0] : null,
+      winnerSquares: winner ? winner[1] : [],
     });
   }
 
