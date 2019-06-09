@@ -1,5 +1,5 @@
 import React from 'react';
-import './toggle-sort.css';
+import './toggle-sort.scss';
 
 function ToggleSort(props) {
     return (

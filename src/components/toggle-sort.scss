@@ -1,0 +1,68 @@
+.tgl {
+  display: none;
+  + .tgl-btn {
+    margin-left: 30px;
+    display: block;
+    width: 8em;
+    height: 2em;
+    position: relative;
+    border-width: 2px;
+    border-style: outset;
+    user-select: none;
+    &:after, &:before {
+      position: relative;
+      display: block;
+      content: "";
+      width: 50%;
+      height: 100%;
+    }
+    &:after {
+      left: 0;
+    }
+    &:before {
+      display: none;
+    }
+  }
+  &:checked + .tgl-btn:after {
+    left: 50%;
+  }
+}
+
+.tgl-skewed {
+  + .tgl-btn {
+    overflow: hidden;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transition: all .2s ease;
+    background: #888;
+    &:after, &:before {
+      display: inline-block;
+      transition: all .2s ease;
+      width: 100%;
+      text-align: center;
+      position: absolute;
+      line-height: 2em;
+      color: #fff;
+    }
+    &:after {
+      left: 100%;
+      content: attr(data-tg-on);
+      background-color: #2196F3;
+      background-image: linear-gradient(#2196F3, #a9d4f5);
+    }
+    &:before {
+      left: 0;
+      content: attr(data-tg-off);
+      background-color: #2196F3;
+      background-image: linear-gradient(#a9d4f5, #2196F3);
+    }
+  }
+  &:checked + .tgl-btn {
+    &:before {
+      left: -100%;
+    }
+    &:after {
+      left: 0;
+    }
+  }
+}
