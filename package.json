@@ -1,24 +1,20 @@
 {
   "name": "react-js-tic-tac-toe",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "0.9.5"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/WayneChang/react-js-tic-tac-toe.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/WayneChang/react-js-tic-tac-toe/issues"
-  },
-  "homepage": "https://github.com/WayneChang/react-js-tic-tac-toe#readme",
   "devDependencies": {
     "cz-conventional-changelog": "^2.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   },
   "config": {
     "commitizen": {
