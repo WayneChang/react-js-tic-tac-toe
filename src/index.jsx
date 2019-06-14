@@ -41,12 +41,12 @@ class Game extends React.Component {
     };
   }
 
-  nextMark() {
+  nextMark = () => {
     const { xIsNext } = this.state;
     return xIsNext ? 'X' : 'O';
   }
 
-  handleClick(i) {
+  handleClick = (i) => {
     const {
       stepNumber, history, winner, xIsNext,
     } = this.state;
@@ -70,12 +70,12 @@ class Game extends React.Component {
     });
   }
 
-  handleToggle() {
+  handleToggle = () => {
     const { isMoveSortDesc } = this.state;
     this.setState({ isMoveSortDesc: !isMoveSortDesc });
   }
 
-  jumpTo(step) {
+  jumpTo = (step) => {
     const { history } = this.state;
     const winner = calculateWinner(history[step].squares);
     this.setState({
@@ -107,19 +107,19 @@ class Game extends React.Component {
           <Board
             squares={current.squares}
             winnerSquares={winnerSquares}
-            onClick={i => this.handleClick(i)}
+            onClick={this.handleClick}
           />
         </div>
         <div className="game-info">
           <div className="status">{status}</div>
           <ToggleSort
-            onClick={() => this.handleToggle()}
+            onClick={this.handleToggle}
           />
           <MoveList
             history={history}
             stepNumber={stepNumber}
             isMoveSortDesc={isMoveSortDesc}
-            onClick={step => this.jumpTo(step)}
+            onClick={this.jumpTo}
           />
         </div>
       </div>

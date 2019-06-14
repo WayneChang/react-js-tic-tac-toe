@@ -6,7 +6,7 @@ import Square from './square';
 import './board.scss';
 
 class Board extends React.Component {
-  renderSquare(i) {
+  renderSquare = (i) => {
     const { squares, winnerSquares, onClick } = this.props;
     return (
       <Square

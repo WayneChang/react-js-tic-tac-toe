@@ -6,10 +6,14 @@ function MoveList(props) {
     history, isMoveSortDesc, stepNumber, onClick,
   } = props;
   let moves = history.map((step, move) => {
-    let desc = move ? `Go to move # ${move},
-                  ${step.squares[step.currMove]} at
-                  (col, row) = (${(step.currMove % 3) + 1}, ${Math.floor(step.currMove / 3) + 1})`
-      : 'Go to game start';
+    let desc;
+    if (move) {
+      desc = `Go to move # ${move},
+              ${step.squares[step.currMove]} at
+              (col, row) = (${(step.currMove % 3) + 1}, ${Math.floor(step.currMove / 3) + 1})`;
+    } else {
+      desc = 'Go to game start';
+    }
     desc = move === stepNumber ? <b>{desc}</b> : desc;
     return (
       <li key={step.currMove}>
@@ -26,7 +30,7 @@ function MoveList(props) {
     moves = moves.reverse();
   }
   return (
-    <div><ol>{moves}</ol></div>
+    <ol>{moves}</ol>
   );
 }
 
