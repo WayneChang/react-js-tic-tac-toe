@@ -1,42 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ToggleSort from './toggle-sort';
+import MoveListItem from './move-list-item.';
+import './move-list.scss';
 
-function MoveList(props) {
-  const {
-    history, isMoveSortDesc, stepNumber, onClick,
-  } = props;
-  let moves = history.map((step, move) => {
-    let desc;
-    if (move) {
-      desc = `Go to move # ${move},
-              ${step.squares[step.currMove]} at
-              (col, row) = (${(step.currMove % 3) + 1}, ${Math.floor(step.currMove / 3) + 1})`;
-    } else {
-      desc = 'Go to game start';
-    }
-    desc = move === stepNumber ? <b>{desc}</b> : desc;
-    return (
-      <li key={step.currMove}>
-        <button
-          type="button"
-          onClick={() => onClick(move)}
-        >
-          {desc}
-        </button>
-      </li>
-    );
-  });
-  if (isMoveSortDesc) {
-    moves = moves.reverse();
+class MoveList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isMoveSortDesc: false,
+    };
   }
-  return (
-    <ol>{moves}</ol>
-  );
+
+  handleToggle = () => {
+    const { isMoveSortDesc } = this.state;
+    this.setState({ isMoveSortDesc: !isMoveSortDesc });
+  }
+
+  render() {
+    const { isMoveSortDesc } = this.state;
+    const { history, stepNumber, onClick } = this.props;
+    const className = isMoveSortDesc ? 'move-list move-list-reverse' : 'move-list';
+
+    return (
+      <div>
+        <ToggleSort onClick={this.handleToggle} />
+        <ol className={className}>
+          <MoveListItem {...{ history, stepNumber, onClick }} />
+        </ol>
+      </div>
+    );
+  }
 }
 
 MoveList.propTypes = {
   history: PropTypes.arrayOf(PropTypes.shape({ squares: PropTypes.array })).isRequired,
-  isMoveSortDesc: PropTypes.bool.isRequired,
   stepNumber: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
 };

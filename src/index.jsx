@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Board from './components/board';
 import MoveList from './components/move-list';
-import ToggleSort from './components/toggle-sort';
 import './index.css';
 
 function calculateWinner(squares) {
@@ -35,7 +34,6 @@ class Game extends React.Component {
       }],
       stepNumber: 0,
       xIsNext: true,
-      isMoveSortDesc: false,
       winner: null,
       winnerSquares: [],
     };
@@ -46,7 +44,7 @@ class Game extends React.Component {
     return xIsNext ? 'X' : 'O';
   }
 
-  handleClick = (i) => {
+  handleBoardClick = (i) => {
     const {
       stepNumber, history, winner, xIsNext,
     } = this.state;
@@ -70,12 +68,7 @@ class Game extends React.Component {
     });
   }
 
-  handleToggle = () => {
-    const { isMoveSortDesc } = this.state;
-    this.setState({ isMoveSortDesc: !isMoveSortDesc });
-  }
-
-  jumpTo = (step) => {
+  handleMoveListClick = (step) => {
     const { history } = this.state;
     const winner = calculateWinner(history[step].squares);
     this.setState({
@@ -88,7 +81,7 @@ class Game extends React.Component {
 
   render() {
     const {
-      history, stepNumber, winner, winnerSquares, isMoveSortDesc,
+      history, stepNumber, winner, winnerSquares,
     } = this.state;
     const current = history[stepNumber];
     const isDraw = !current.squares.includes(null);
@@ -107,19 +100,15 @@ class Game extends React.Component {
           <Board
             squares={current.squares}
             winnerSquares={winnerSquares}
-            onClick={this.handleClick}
+            onClick={this.handleBoardClick}
           />
         </div>
         <div className="game-info">
           <div className="status">{status}</div>
-          <ToggleSort
-            onClick={this.handleToggle}
-          />
           <MoveList
             history={history}
             stepNumber={stepNumber}
-            isMoveSortDesc={isMoveSortDesc}
-            onClick={this.jumpTo}
+            onClick={this.handleMoveListClick}
           />
         </div>
       </div>

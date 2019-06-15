@@ -1,0 +1,10 @@
+ol.move-list {
+  display: flex;
+  flex-direction: column;
+  &.move-list-reverse{
+    flex-direction: column-reverse;
+  }
+}
+li.move-list-item {
+  flex: 0 0 auto;
+}
