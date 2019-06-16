@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ToggleSort from './toggle-sort';
-import MoveListItem from './move-list-item.';
 import './move-list.scss';
 
-class MoveList extends React.Component {
+class MoveList extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,14 +18,14 @@ class MoveList extends React.Component {
 
   render() {
     const { isMoveSortDesc } = this.state;
-    const { history, stepNumber, onClick } = this.props;
+    const { children } = this.props;
     const className = isMoveSortDesc ? 'move-list move-list-reverse' : 'move-list';
 
     return (
       <div>
         <ToggleSort onClick={this.handleToggle} />
         <ol className={className}>
-          <MoveListItem {...{ history, stepNumber, onClick }} />
+          {children}
         </ol>
       </div>
     );
@@ -34,9 +33,7 @@ class MoveList extends React.Component {
 }
 
 MoveList.propTypes = {
-  history: PropTypes.arrayOf(PropTypes.shape({ squares: PropTypes.array })).isRequired,
-  stepNumber: PropTypes.number.isRequired,
-  onClick: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default MoveList;

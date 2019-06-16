@@ -2,14 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './square.scss';
 
-function Square(props) {
-  const { isWinner, onClick, value } = props;
-  const clasname = isWinner ? 'square square-winner' : 'square';
-  return (
-    <button className={clasname} onClick={onClick} type="button">
-      {value}
-    </button>
-  );
+class Square extends React.PureComponent {
+  render() {
+    const { isWinner, onClick, value } = this.props;
+    const clasname = isWinner ? 'square square-winner' : 'square';
+    return (
+      <button className={clasname} onClick={onClick} type="button">
+        {value}
+      </button>
+    );
+  }
 }
 
 Square.propTypes = {

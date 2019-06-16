@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Square from './square';
 import './board.scss';
 
-class Board extends React.Component {
+class Board extends React.PureComponent {
   renderSquare = (i) => {
     const { squares, winnerSquares, onClick } = this.props;
     return (
