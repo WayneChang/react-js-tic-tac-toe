@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Board from './components/board';
 import MoveList from './components/move-list';
-import MoveListItems from './components/move-list-items';
 import './index.css';
 
 function calculateWinner(squares) {
@@ -106,9 +105,7 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div className="status">{status}</div>
-          <MoveList>
-            <MoveListItems {...{ history, stepNumber }} onClick={this.handleMoveListClick} />
-          </MoveList>
+          <MoveList {...{ history, stepNumber }} onClick={this.handleMoveListClick} />
         </div>
       </div>
     );
