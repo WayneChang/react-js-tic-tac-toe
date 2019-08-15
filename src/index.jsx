@@ -4,7 +4,7 @@ import Board from './components/board';
 import MoveList from './components/move-list';
 import './index.css';
 
-function calculateWinner(squares) {
+function getWinnerAndwinSquares(squares) {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -15,13 +15,14 @@ function calculateWinner(squares) {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  for (let i = 0; i < lines.length; i += 1) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return [squares[a], lines[i]];
-    }
-  }
-  return null;
+  const winLine = lines.find((line) => {
+    const [a, b, c] = line;
+    return (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]);
+  });
+  return {
+    winner: winLine ? squares[winLine[0]] : null,
+    winSquares: winLine || [],
+  };
 }
 
 class Game extends React.Component {
@@ -33,49 +34,48 @@ class Game extends React.Component {
         currMove: -1,
       }],
       stepNumber: 0,
-      xIsNext: true,
+      isNextTurnPlayerX: true,
       winner: null,
       winnerSquares: [],
     };
   }
 
-  nextMark = () => {
-    const { xIsNext } = this.state;
-    return xIsNext ? 'X' : 'O';
+  nextPlayer = () => {
+    const { isNextTurnPlayerX } = this.state;
+    return isNextTurnPlayerX ? 'X' : 'O';
   }
 
   handleBoardClick = (i) => {
     const {
-      stepNumber, history, winner, xIsNext,
+      stepNumber, history, winner, isNextTurnPlayerX,
     } = this.state;
     const historyToStep = history.slice(0, stepNumber + 1);
-    const current = historyToStep[stepNumber];
-    const squares = current.squares.slice();
+    const squares = historyToStep[stepNumber].squares.slice();
     if (winner || squares[i]) {
       return;
     }
-    squares[i] = this.nextMark();
-    const winnerAndSquares = calculateWinner(squares);
+    squares[i] = this.nextPlayer();
+    const winnerAndwinSquares = getWinnerAndwinSquares(squares);
     this.setState({
       history: historyToStep.concat([{
         squares,
         currMove: i,
       }]),
       stepNumber: historyToStep.length,
-      xIsNext: !xIsNext,
-      winner: winnerAndSquares ? winnerAndSquares[0] : null,
-      winnerSquares: winnerAndSquares ? winnerAndSquares[1] : [],
+      isNextTurnPlayerX: !isNextTurnPlayerX,
+      winner: winnerAndwinSquares.winner,
+      winnerSquares: winnerAndwinSquares.winSquares,
     });
   }
 
   handleMoveListClick = (step) => {
     const { history } = this.state;
-    const winner = calculateWinner(history[step].squares);
+    const winnerAndwinSquares = getWinnerAndwinSquares(history[step].squares);
     this.setState({
       stepNumber: step,
-      xIsNext: (step % 2) === 0,
-      winner: winner ? winner[0] : null,
-      winnerSquares: winner ? winner[1] : [],
+      isNextTurnPlayerX: (step % 2) === 0,
+      winner: winnerAndwinSquares.winner,
+      winnerSquares: winnerAndwinSquares.winSquares,
     });
   }
 
@@ -92,7 +92,7 @@ class Game extends React.Component {
     } else if (isDraw) {
       status = 'Draw';
     } else {
-      status = `Next player: ${this.nextMark()}`;
+      status = `Next player: ${this.nextPlayer()}`;
     }
     return (
       <div className="game">
@@ -111,8 +111,6 @@ class Game extends React.Component {
     );
   }
 }
-
-// ========================================
 
 ReactDOM.render(
   <Game />,

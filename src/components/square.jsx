@@ -4,7 +4,8 @@ import './square.scss';
 
 class Square extends React.PureComponent {
   render() {
-    const { isWinner, onClick, value, i,
+    const {
+      isWinner, onClick, value, i,
     } = this.props;
     const clasname = isWinner ? 'square square-winner' : 'square';
     return (
