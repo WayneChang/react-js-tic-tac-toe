@@ -13,7 +13,8 @@ class Board extends React.PureComponent {
         key={`square${i}`}
         value={squares[i]}
         isWinner={winnerSquares.includes(i)}
-        onClick={() => onClick(i)}
+        i={i}
+        onClick={onClick}
       />
     );
   }
