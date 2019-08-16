@@ -1,35 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ToggleSort from './toggle-sort';
-import MoveListItems from './move-list-items';
+import MoveListItems from './move-list-item';
 import './move-list.scss';
 
-class MoveList extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isMoveSortDesc: false,
-    };
-  }
-
-  handleToggle = () => {
-    const { isMoveSortDesc } = this.state;
-    this.setState({ isMoveSortDesc: !isMoveSortDesc });
-  }
-
+class MoveList extends React.Component {
   render() {
     const { history, stepNumber, onClick } = this.props;
-    const { isMoveSortDesc } = this.state;
-    const className = isMoveSortDesc ? 'move-list move-list-reverse' : 'move-list';
-
-    return (
-      <div>
-        <ToggleSort onClick={this.handleToggle} />
-        <ol className={className}>
-          <MoveListItems {...{ history, stepNumber, onClick }} />
-        </ol>
-      </div>
-    );
+    const moves = history.map((step, move) => {
+      let desc;
+      if (move) {
+        desc = `Go to move # ${move}, `
+          + `${step.squares[step.currMove]} at `
+          + `(col, row) = (${(step.currMove % 3) + 1}, ${Math.floor(step.currMove / 3) + 1})`;
+      } else {
+        desc = 'Go to game start';
+      }
+      return (
+        <MoveListItems
+          key={step.currMove}
+          {...{
+            onClick, move, desc,
+          }}
+          isBold={move === stepNumber}
+        />
+      );
+    });
+    return moves;
   }
 }
 

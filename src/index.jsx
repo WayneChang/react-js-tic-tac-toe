@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Board from './components/board';
-import MoveList from './components/move-list';
+import ToggleMoveList from './components/toggle-move-list';
 import './index.css';
 
 function getWinnerAndwinSquares(squares) {
@@ -69,7 +69,8 @@ class Game extends React.Component {
   }
 
   handleMoveListClick = (step) => {
-    const { history } = this.state;
+    const { stepNumber, history } = this.state;
+    if (stepNumber === step) return;
     const winnerAndwinSquares = getWinnerAndwinSquares(history[step].squares);
     this.setState({
       stepNumber: step,
@@ -105,7 +106,7 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div className="status">{status}</div>
-          <MoveList {...{ history, stepNumber }} onClick={this.handleMoveListClick} />
+          <ToggleMoveList {...{ history, stepNumber }} onClick={this.handleMoveListClick} />
         </div>
       </div>
     );
