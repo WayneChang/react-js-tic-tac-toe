@@ -2,7 +2,9 @@
   "name": "react-js-tic-tac-toe",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://ThisWayne.github.io/react-js-tic-tac-toe",
   "dependencies": {
+    "gh-pages": "^2.1.1",
     "node-sass": "^4.12.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
@@ -21,7 +23,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "config": {
     "commitizen": {
