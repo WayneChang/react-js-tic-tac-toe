@@ -1,33 +1,26 @@
-.board-row:after {
-    clear: both;
-    content: "";
-    display: table;
+.board {
+    display: grid;
+    grid-template-columns: repeat(4, 50px);
+    grid-template-rows: repeat(4, 50px);
+    grid-template-areas:
+        "board-category board-col-title"
+        "board-row-title square";
 }
 
-.col-title, .row-title, .col-row-category {
+.board-col-title,
+.board-row-title,
+.board-category {
     background: #fff;
-    border: 1px solid #999;
-    float: left;
+    border: 0;
+    padding: 0;
     font-size: 24px;
     font-weight: bold;
-    line-height: 34px;
-    height: 34px;
-    padding: 0;
     text-align: center;
-    width: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.col-row-category {
+.board-category {
     font-size: 12px;
-    border: 0px;
-    width: 60px;
-}
-
-.col-title {
-    border: 0px;
-}
-
-.row-title {
-    margin-left: 26px;
-    border: 0px;
 }
